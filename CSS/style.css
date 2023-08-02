@@ -1,0 +1,410 @@
+.containerUsuario{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.containerUsuario .usuario{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.containerUsuario .usuario div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    border: black 2px solid;
+    background-color: black;
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+.containerUsuario .usuario div input{
+    width: 50%;
+    padding: 2px;
+    margin: 7px 0;
+}
+
+.containerUsuario .containerCargarOcalcular{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+.containerUsuario .containerCargarOcalcular .cont-buttons{
+    width: 50%;
+    height: 50%;
+    border: solid 2px black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center; 
+    background-color: rgb(139, 139, 139);
+}
+.containerUsuario .containerCargarOcalcular .cont-buttons .cont-btn-eleccion{
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+}
+.containerUsuario .containerCargarOcalcular .cont-buttons .cont-btn-eleccion button{
+    width: auto;
+}
+.containerPadre{
+    margin: 30px 0;
+   display: flex;
+   justify-content: center;
+   align-items: center; 
+   flex-direction: column;
+   width: 100%;
+   height: 100%;
+   text-align: center;
+}
+.containerPadre .containerPrograma{
+    border: solid 2px black;
+    height: auto;
+    width: 70%;
+}
+.containerPadre .btn-volver{
+    width: 70%;
+    height: 60px;
+    margin-top: 25px;
+    border: 2px solid ;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.containerPadre .btn-volver button{
+    width: 8%;
+    padding: 8px;
+    color: black;
+}
+
+.cargaDeProductos .btn-volver2{
+    width: 70%;
+    height: 60px;
+    margin-top: 25px;
+    border: 2px solid ;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerPadre .containerPrograma .containerForm1{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.containerPadre .containerPrograma h1{
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: 100%;
+}
+.containerPadre .containerPrograma .containerForm1 .containerForm2{
+    width: 35%;
+    border: solid 2px black;
+    margin-top: 20px;
+}
+.containerPadre .containerPrograma .containerForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+
+    width: 100%;
+}
+.containerPadre .containerPrograma .containerForm .form{
+    display: flex;
+    width: 100%;
+}
+.containerPadre .containerPrograma .containerForm .form .mercaderia{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.containerPadre .containerPrograma .containerForm .form .containerPedido{
+    background-color: black;
+    width: 100%;
+}
+.containerPadre .containerPrograma .containerForm .form .containerPedido h2{
+    color: white;
+}
+
+.containerPadre .containerPrograma .containerForm .form .containerPedido .form1{
+   display: flex;
+   flex-direction: column;
+}
+
+.containerPadre .containerPrograma .containerForm .form .containerPedido .form1 .formElements1{
+    display: flex;
+    flex-direction: column;
+}
+
+.containerPadre .containerPrograma .containerForm .form .containerPedido .form1 .formElements1 div{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.containerPadre .containerPrograma .containerForm .form .containerPedido .form1 .botonesCargar{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.containerPadre .containerPrograma .containerForm .form .mercaderia .input-class{
+    width: 50%;
+}
+.containerPadre .mercaderiaDefinida{
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.containerPadre .mercaderiaDefinida div{
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.containerPadre .mercaderiaDefinida div .formularioDatos{
+    width: 100%;
+}
+.containerPadre .mercaderiaDefinida div .containers-mercaderia{
+    display: flex;
+    margin: 10px;
+    border: solid black 2px;
+    width: 50%;
+    background-color: rgb(230, 230, 230);
+}
+.containerPadre .mercaderiaDefinida div .containers-mercaderia .cantidades{
+    width: 100%;
+}
+.containerPadre .containerTotal{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+}
+.containerPadre .containerTotal .total{
+    margin: 10px 0;
+    padding: 0 5px;
+    background-color: black;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+}
+.containerPadre .containerTotal .total p{
+    font-size: 1.5em;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+.containerPadre .cont-btnFinalizar{
+    width: 100%;
+} 
+.containerPadre .cont-btnFinalizar button{
+    width: 20%;
+}
+.btn-calcular{
+    width: 10%;
+}
+
+.cargaDeProductos{
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.cargaDeProductos .containerPrograma2{
+    width: 70%;
+    border: solid 2px black;
+}
+.cargaDeProductos .containerPrograma2 .containerForm2{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.cargaDeProductos .containerPrograma2 .containerForm2 h1{
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: 100%;
+}
+.cargaDeProductos .containerPrograma2 .containerForm2 .containerForm3{
+    width: 35%;
+    border: solid 2px black;
+    margin: 20px 0;
+}
+.cargaDeProductos .containerPrograma2 .containerForm2 .containerForm3 .containerForm4{
+    display: flex;
+    flex-direction: column;
+    align-items:space-between;
+    margin-top: 15px;
+    width: 100%;
+}
+.cargaDeProductos .containerPrograma2 .containerForm2 .containerForm3 .containerForm4 h2{
+    background-color: wheat;
+    color: black;
+}
+.cargaDeProductos .containerPrograma2 .containerForm2 .containerForm3 .containerForm4 form .botonesCargar{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.contBaseDatos{
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.contBaseDatos .containerPrograma3{
+    border: solid 2px black;
+    height: auto;
+    width: 70%;
+}
+.contBaseDatos .btn-volver3{
+    width: 70%;
+    height: 60px;
+    margin-top: 25px;
+    border: 2px solid ;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contBaseDatos .btn-volver3 button{
+    width: 8%;
+    padding: 8px;
+    color: black;
+}
+.contBaseDatos .containerPrograma3 .containerForm3{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: wheat;
+}
+.contBaseDatos .containerPrograma3 .containerForm3 h1{
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: 100%;
+}
+.contBaseDatos .containerPrograma3 .containerForm3 .containerForm5{
+    width: 90%;
+    margin: 20px 0;
+}
+.contBaseDatos .containerPrograma3 .containerForm3 .containerForm5 .containerForm6{
+    font-size: 1.5em;
+    width: 100%;
+}
+.contBaseDatos .containerPrograma3 .containerForm3 .btn-resetBase{
+    width: auto;
+    margin-bottom: 5px;
+}
+
+.contMisPedidos{
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.contMisPedidos .containerPrograma4{
+    border: solid 2px black;
+    height: auto;
+    width: 70%;
+}
+
+.contMisPedidos .btn-volver4{
+    width: 70%;
+    height: 60px;
+    margin-top: 25px;
+    border: 2px solid ;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contMisPedidos .btn-volver4 button{
+    width: 8%;
+    padding: 8px;
+    color: black;
+}
+
+.contMisPedidos .containerPrograma4 .containerForm4{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* background-color: wheat; */
+}
+.contMisPedidos .containerPrograma4 .containerForm4 h1{
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: 100%;
+}
+
+.contMisPedidos .containerPrograma4 .containerForm4 .containerForm7{
+    width: 90%;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contMisPedidos .containerPrograma4 .containerForm4 .containerForm7 .containerForm8{
+   
+    font-size: 1.5em;
+    width: 100%;
+}
+
+.contMisPedidos .containerPrograma4 .containerForm4 .btn-resetBase{
+    width: auto;
+    margin-bottom: 5px;
+    
+}
+
+.contMisPedidos .containerPrograma4 .containerForm4 .containerForm7 .cont-input-cliente{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    border: solid 2px black;
+    margin-bottom: 20px;
+    padding: 10px 10px;
+}
+
+
+.pdf-style-2{
+    width: 100%;
+    height: 600px;
+    font-family: 'Times New Roman', Times, serif;
+}
