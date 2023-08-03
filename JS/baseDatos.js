@@ -44,6 +44,7 @@ const renderBaseDatos = () =>{
                   <th scope="col">Categoria</th>
                   <th scope="col">Precio</th>
                   <th scope="col">Stock</th>
+                  <th scope="col">Eliminar</th>
                   <th scope="col">Editar</th>
                 </tr>
               </thead>
@@ -52,7 +53,9 @@ const renderBaseDatos = () =>{
               </tbody>
             </table>
         </div>
-    
+        <div id="textoCantidad" class="border border-dark bg-dark">
+
+        </div>
       </div>
       <div class="btn-resetBase">
         <button id="btn-resetBase"class="btn bg-danger text-light" type="button">Resetear Base Datos</button>
@@ -80,9 +83,10 @@ const renderListaBaseDatos = (productos) =>{
     <td>${posicion}</td>
     <td>${item.nombre}</td>
     <td>${item.categoria}</td>
-    <td>$${item.precio} ARS</td>
+    <td id="pepe${posicion}">$${item.precio} ARS</td>
     <td>${item.unidades}</td>
     <td><button type="button" id=${posicion} class="btn bg-danger text-light">Eliminar</button></td>
+    <td><button type="button" id=${`edit${posicion}`} class="btn bg-danger text-light">Modificar</button></td>
     `
     
     salidaProd.className = "w-100";
@@ -95,10 +99,67 @@ const renderListaBaseDatos = (productos) =>{
       renderListaBaseDatos(productos); // volvemos a renderizar los productos 
       localStorage.setItem("baseDatos", JSON.stringify(productos)); //Actualizamos LocalStorage
       console.log(productos);
-    })   
+    })
+    const btnEditar = document.getElementById(`edit${posicion}`);
+
+    btnEditar.addEventListener("click", () =>{
+      const pepe = document.getElementById(`pepe${posicion}`)
+      console.log("btn activado editar");
+      btnEditarProducto(item.nombre,productos,pepe);
+    })
+
+    stockNegativo(item.unidades,item.nombre)
+    
   })
 }
 
+const stockNegativo = (cantidadesStock,nombre) =>{
+  const conetenedorStockMensaje = document.getElementById("textoCantidad");
+
+  if (cantidadesStock <= 0) {
+    const parrafo = document.createElement("p");
+    parrafo.innerHTML = `#${nombre} PASÓ A TENER CANTIDAD NEGATIVA.`;
+    parrafo.className ="text-warning fs-5";
+
+    
+    conetenedorStockMensaje.appendChild(parrafo);
+  }
+}
+
+const btnEditarProducto = (nombre,producto,contenedor) =>{
+  const productoSeleccionado = producto;
+
+ const productoElegido= productoSeleccionado.find((item) => item.nombre === nombre);
+
+  console.log(productoElegido);
+
+  if(!productoElegido){
+    console.log("producto no encontrado");
+  }
+
+ 
+  const inputPrecio = document.createElement("input");
+  inputPrecio.type ="text";
+  inputPrecio.placeholder="Nuevo Precio";
+  inputPrecio.className ="p-w"
+  
+  contenedor.innerHTML="";
+
+  contenedor.appendChild(inputPrecio);
+
+  inputPrecio.addEventListener("change", () => {
+    const nuevoPrecio = parseFloat(inputPrecio.value); // Convertir el valor del input a número
+
+    if (!isNaN(nuevoPrecio)) {
+      productoElegido.precio = nuevoPrecio;
+      contenedor.innerHTML = `$${nuevoPrecio} ARS`; // Mostrar el nuevo precio en el contenedor
+      localStorage.setItem("baseDatos", JSON.stringify(productoSeleccionado)); // Utiliza productoSeleccionado en lugar de producto
+    } else {
+      console.error("Precio inválido, no se pudo editar el producto.");
+    }
+  });
+
+}
 
 
 const renderProductosBaseDatos = () =>{
