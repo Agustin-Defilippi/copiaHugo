@@ -24,7 +24,7 @@ const crearNuevoCampo = () => {
     nombreInput.className="m-1";
   
     const precioInput = document.createElement('input');
-    precioInput.type = 'number';
+    precioInput.type = 'text';
     precioInput.placeholder = 'Precio';
     precioInput.className="m-1";
     

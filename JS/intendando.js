@@ -8,7 +8,7 @@ const btnCalcularProductos = () =>{
         agregarCampoOnClick1();
         enviarPedido();
         volverAtrasCalcularProducto();
-        terminarCargaProducto1();
+        mostrarBtnFinalizar1();
         containerButtons.innerHTML = "";
         containerButtons.className= "heigth-0"
     })
@@ -37,7 +37,7 @@ const renderContPadre = () => {
                                     <div class="my-2 botonesCargar">
                                         <button id="btn-pedido" type="button" class="btn bg-dark border border-warning text-warning">Producto(+)</button>
                                         <button type="submit" class="btn bg-dark text-warning border border-warning text-warning">Enviar(+)</button>
-                                        <button id="btn-terminar1" type="button" class="btn bg-dark text-warning border border-warning text-warning">Resetear</button>
+                                        <button id="btn-descontarStock" type="button" class="btn bg-dark text-warning border border-warning text-warning">Descontar Stock</button>
                                     </div>
                                 </form>
                             </div>       
@@ -181,19 +181,6 @@ const procesarFormulario1 = () => {
    localStorage.setItem("misPedidos",JSON.stringify(datos));
 };
 
-const terminarCargaProducto1 = () =>{
-    const btnTerminar1 = document.getElementById("btn-terminar1");
-    const formElements1 = document.getElementById("formElements1");
-
-    btnTerminar1.addEventListener("click", () =>{
-        formElements1.innerHTML="";
-        console.log(datos);
-        agregarCampoOnClick1();
-        datos.length = 0
-        console.log(datos);
-    })
-}
-
 // Funcion volver atras calcular producto
 const volverAtrasCalcularProducto = () =>{
     const btnVolver = document.getElementById("btn-volverAtras");
@@ -209,3 +196,32 @@ const volverAtrasCalcularProducto = () =>{
         btnCargarPedidos();
     })
 }
+
+const mostrarBtnFinalizar1 = () => {
+    const btnFinalizar1 = document.getElementById("btn-descontarStock");
+
+    btnFinalizar1.addEventListener("click", () => {
+        const prodBasedeDatos1 = JSON.parse(localStorage.getItem("baseDatos"));
+        console.log(prodBasedeDatos1);
+        const misProductos = JSON.parse(localStorage.getItem("misPedidos"));
+        console.log(misProductos);
+
+        for (const productoObjeto of misProductos) {
+            const nombreProducto1 = productoObjeto.nombreProducto.trim();
+            const unidadesProducto1 = productoObjeto.unidadesProducto;
+
+            console.log("Tu nombre de producto es:", nombreProducto1);
+            
+            let pepo1 = prodBasedeDatos1.find((element) => element.nombre === nombreProducto1);
+
+            if (pepo1) {
+                pepo1.unidades -= unidadesProducto1;
+            }
+
+            console.log("Producto encontrado:", pepo1);
+        }
+
+        localStorage.setItem("baseDatos", JSON.stringify(prodBasedeDatos1));
+    });
+};
+
