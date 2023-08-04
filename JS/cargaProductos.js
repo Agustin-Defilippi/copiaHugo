@@ -107,8 +107,9 @@ const cargaStockProductos = () => {
  const formStock = document.getElementById("formStock");
 
  formStock.addEventListener("submit", (e) => {
- e.preventDefault();
- procesarFormulario();
+  e.preventDefault();
+  procesarFormulario();
+  formStock.reset();
  });
 
  volverAtrasCargarProducto()

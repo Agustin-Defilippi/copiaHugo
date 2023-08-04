@@ -54,7 +54,7 @@ const renderBaseDatos = () =>{
             </table>
         </div>
         <div id="textoCantidad" class="border border-dark bg-dark">
-
+          <h3 id="h3Alert"></h3>
         </div>
       </div>
       <div class="btn-resetBase">
@@ -84,7 +84,7 @@ const renderListaBaseDatos = (productos) =>{
     <td>${item.nombre}</td>
     <td>${item.categoria}</td>
     <td id="pepe${posicion}">$${item.precio} ARS</td>
-    <td>${item.unidades}</td>
+    <td id="cant${posicion}">${item.unidades}</td>
     <td><button type="button" id=${posicion} class="btn bg-danger text-light">Eliminar</button></td>
     <td><button type="button" id=${`edit${posicion}`} class="btn bg-danger text-light">Modificar</button></td>
     `
@@ -103,9 +103,10 @@ const renderListaBaseDatos = (productos) =>{
     const btnEditar = document.getElementById(`edit${posicion}`);
 
     btnEditar.addEventListener("click", () =>{
-      const pepe = document.getElementById(`pepe${posicion}`)
+      const precio = document.getElementById(`pepe${posicion}`);
+      const cantidad = document.getElementById(`cant${posicion}`);
       console.log("btn activado editar");
-      btnEditarProducto(item.nombre,productos,pepe);
+      btnEditarProducto(item.nombre,productos,precio,cantidad);
     })
 
     stockNegativo(item.unidades,item.nombre)
@@ -117,16 +118,17 @@ const stockNegativo = (cantidadesStock,nombre) =>{
   const conetenedorStockMensaje = document.getElementById("textoCantidad");
 
   if (cantidadesStock <= 0) {
+    const h3Alerta = document.getElementById("h3Alert");
+    h3Alerta.innerHTML = "Alerta Mercaderia Sin Stock!";
+    h3Alerta.className= "text-warning";
     const parrafo = document.createElement("p");
-    parrafo.innerHTML = `#${nombre} PASÓ A TENER CANTIDAD NEGATIVA.`;
-    parrafo.className ="text-warning fs-5";
-
-    
+    parrafo.innerHTML = `#${nombre} Cuenta con un STOCK negativo!`;
+    parrafo.className ="p-color fs-5";
     conetenedorStockMensaje.appendChild(parrafo);
   }
 }
 
-const btnEditarProducto = (nombre,producto,contenedor) =>{
+const btnEditarProducto = (nombre,producto,contenedor1,contenedor2) =>{
   const productoSeleccionado = producto;
 
  const productoElegido= productoSeleccionado.find((item) => item.nombre === nombre);
@@ -137,28 +139,53 @@ const btnEditarProducto = (nombre,producto,contenedor) =>{
     console.log("producto no encontrado");
   }
 
- 
+  //CREACION DE INPUTS MODIFICABLES
   const inputPrecio = document.createElement("input");
   inputPrecio.type ="text";
   inputPrecio.placeholder="Nuevo Precio";
   inputPrecio.className ="p-w"
   
-  contenedor.innerHTML="";
+  contenedor1.innerHTML="";
 
-  contenedor.appendChild(inputPrecio);
+  contenedor1.appendChild(inputPrecio);
 
   inputPrecio.addEventListener("change", () => {
     const nuevoPrecio = parseFloat(inputPrecio.value); // Convertir el valor del input a número
 
     if (!isNaN(nuevoPrecio)) {
       productoElegido.precio = nuevoPrecio;
-      contenedor.innerHTML = `$${nuevoPrecio} ARS`; // Mostrar el nuevo precio en el contenedor
+      contenedor1.innerHTML = `$${nuevoPrecio} ARS`; // Mostrar el nuevo precio en el contenedor
       localStorage.setItem("baseDatos", JSON.stringify(productoSeleccionado)); // Utiliza productoSeleccionado en lugar de producto
     } else {
       console.error("Precio inválido, no se pudo editar el producto.");
     }
   });
 
+  const inputCantidad = document.createElement("input");
+  inputCantidad.type ="text";
+  inputCantidad.placeholder="Cantidad";
+  inputCantidad.className ="p-w";
+  
+  contenedor2.innerHTML="";
+
+  contenedor2.appendChild(inputCantidad);
+
+  inputCantidad.addEventListener("change", () =>{
+   const valorInputCantidad = parseInt(inputCantidad.value);
+
+   console.log(valorInputCantidad);
+
+   if (!isNaN(valorInputCantidad)){
+    productoElegido.unidades = valorInputCantidad;
+
+    contenedor2.innerHTML = `${valorInputCantidad}`;
+
+    localStorage.setItem("baseDatos", JSON.stringify(productoSeleccionado));
+   }else{
+    console.error("Precio inválido, no se pudo editar el producto.");
+   }
+ 
+  })
 }
 
 

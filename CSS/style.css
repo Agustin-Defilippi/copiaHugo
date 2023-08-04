@@ -149,6 +149,7 @@
 .containerPadre .containerPrograma .containerForm .form .containerPedido .form1 .formElements1{
     display: flex;
     flex-direction: column;
+    padding: 10px 10px;
 }
 
 .containerPadre .containerPrograma .containerForm .form .containerPedido .form1 .formElements1 div{
@@ -411,4 +412,9 @@
 
 .p-w{
     width: 150px;
+    border-radius: 15px;
+}
+
+.p-color{
+    color: red;
 }
