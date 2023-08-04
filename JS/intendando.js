@@ -8,7 +8,6 @@ const btnCalcularProductos = () =>{
         agregarCampoOnClick1();
         enviarPedido();
         volverAtrasCalcularProducto();
-        mostrarBtnFinalizar1();
         containerButtons.innerHTML = "";
         containerButtons.className= "heigth-0"
     })
@@ -31,7 +30,7 @@ const renderContPadre = () => {
                             <div class="containerPedido">
                                 <h2>Realizar Pedidos</h2>   
                                 <form class="form1" id="formStock1">
-                                    <div id="formElements1" class="my-3">
+                                    <div id="formElements1" class="my-3 formElements1">
                                      
                                     </div>
                                     <div class="my-2 botonesCargar">
@@ -134,6 +133,7 @@ const enviarPedido = () =>{
     formStock1.addEventListener("submit", (e) => {
     e.preventDefault();
     procesarFormulario1();
+    mostrarBtnFinalizar1()
     formStock1.reset();
     
     const numeroComprobante = comprobantePedido;
@@ -206,13 +206,15 @@ const mostrarBtnFinalizar1 = () => {
         const misProductos = JSON.parse(localStorage.getItem("misPedidos"));
         console.log(misProductos);
 
+        let pepo1 = ""
+
         for (const productoObjeto of misProductos) {
             const nombreProducto1 = productoObjeto.nombreProducto.trim();
             const unidadesProducto1 = productoObjeto.unidadesProducto;
 
             console.log("Tu nombre de producto es:", nombreProducto1);
             
-            let pepo1 = prodBasedeDatos1.find((element) => element.nombre === nombreProducto1);
+           pepo1 = prodBasedeDatos1.find((element) => element.nombre === nombreProducto1);
 
             if (pepo1) {
                 pepo1.unidades -= unidadesProducto1;
