@@ -259,7 +259,7 @@ const calcularTotalPrecioLista = () =>{
     const datosFinales = datos;
 
    let total = datosFinales.reduce((acumulador,item) =>{
-     return acumulador+= item.precio * item.unidades
+     return acumulador+= item.precioProducto * item.unidadesProducto
    },0)
    totalCasilla.innerHTML = `<p>Total Precios (lista) Mercaderia: $${total}</p>`
 }

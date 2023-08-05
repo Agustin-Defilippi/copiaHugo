@@ -67,7 +67,17 @@ const renderMisPedidos = () =>{
             </div>
 
           </div>
+
+          <div class="casillasTotalLista w-100 bg-dark text-light mb-3 fs-2">
+            <div id="casillasTotalLista">
+            </div>
+            <div id="casillasTotalNeto">
+            </div>
+          </div>
+         
+          
         </div>
+        
     
         <div class="btn-resetBase">
           <button id="btn-pdf"class="btn bg-danger text-light" type="button">Descargar PDF</button>
@@ -131,8 +141,10 @@ const renderContenedores = () =>{
       </tr>
     </thead>
     <tbody id="misPedidos" class="w-100">
-
+     
+   
     </tbody>
+    <div id="cont-btnReset" class="w-100"></div>
   </table>`
     renderizarPedido(); 
     console.log(inputNombreCliente.value);
@@ -143,14 +155,13 @@ const renderContenedores = () =>{
 
 const renderizarPedido = () => {
   const pedidos = datos;
-  /* console.log(pedidos); */
   const inputNombreCliente = document.getElementById("clienteNombre");
   const inputPosicion = document.getElementById("posicionPedido");
   const misPedidos = document.getElementById("misPedidos");
 
   const arrayFiltradoCliente = pedidos.filter(item => item.nombreCliente === inputNombreCliente.value.trim().toUpperCase());
 
-  /* console.log(arrayFiltradoCliente); */
+  
   // Limpiamos los resultados anteriores antes de mostrar los nuevos
   misPedidos.innerHTML = '';
 
@@ -183,9 +194,7 @@ const renderizarPedido = () => {
       console.log("Ingrese un número válido de posición.");
       return;
     }
-    if(posicionSeleccionada == ""){
-      renderMisPedidos()
-    }
+ 
   
     // Filtramos el array por la posición seleccionada
     const arrayFiltradoPorPosicion = arrayFiltradoCliente.filter((item, index) => index === posicionSeleccionada);
@@ -243,11 +252,11 @@ const verProductosGuardados = (elementoNombre) => {
     // Vaciamos el contenido actual de los pedidos
     contVerPedidos.innerHTML = '';
 
-    filtracionNombre.forEach(elemento => {
+    filtracionNombre.forEach((elemento, i) => {
       let PrecioSinIVA = (elemento.precioProducto / 1.21).toFixed(2);
       const inyectarHtml = document.createElement("tr");
 
-      inyectarHtml.innerHTML = `
+      inyectarHtml.innerHTML = `<td>${i}</td>
         <td>${elemento.id}</td>
         <td>${elemento.nombreProducto}</td>
         <td>${elemento.unidadesProducto}</td>
@@ -260,14 +269,37 @@ const verProductosGuardados = (elementoNombre) => {
 
       inyectarHtml.classList.add("pedido-guardado"); // Agregamos una clase CSS a los pedidos guardados
       contVerPedidos.appendChild(inyectarHtml);
+
+     
     });
 
-    // Ocultamos los pedidos no guardados
-    const pedidosNoGuardados = contVerPedidos.querySelectorAll("tr:not(.pedido-guardado)");
-    pedidosNoGuardados.forEach(pedido => {
-      pedido.style.display = "none";
-    });
+  
+
+
+   calcularTotalPrecioLista(filtracionNombre);
+   calcularTotalPrecioNeto(filtracionNombre);    
   });
+  const contVerPedidos = document.getElementById("misPedidos");
+  const contBotton = document.getElementById("cont-btnReset")
+
+  const btnEliminarGuardados = document.createElement("button");
+  btnEliminarGuardados.textContent = "Resetear";
+  btnEliminarGuardados.className = "btn bg-dark text-light text-center mb-2"
+  btnEliminarGuardados.id= `resetBtn`
+
+  contBotton.appendChild(btnEliminarGuardados);
+  contBotton.className ="diss"
+  
+
+  btnEliminarGuardados.addEventListener("click" , () =>{
+    const totalCasilla = document.getElementById("casillasTotalLista");
+    const casillasTotalNeto = document.getElementById("casillasTotalNeto");
+    console.log("si funciona");
+    localStorage.removeItem("guardarPedidos");
+    contVerPedidos.innerHTML="";
+    totalCasilla.innerHTML ="";
+    casillasTotalNeto.innerHTML = "";
+  })
 }
 
 const calcularDescuentos = (precioProducto,porcentajeDescuento) =>{
@@ -294,3 +326,23 @@ const descargarPDF = (x) => {
     html2pdf().from(element).set(options).save();
 }; 
   
+
+const calcularTotalPrecioLista = (array) =>{
+  const totalCasilla = document.getElementById("casillasTotalLista");
+  const datosFinales = array;
+
+ let total = datosFinales.reduce((acumulador,item) =>{
+   return acumulador+= item.precioProducto * item.unidadesProducto
+ },0)
+ totalCasilla.innerHTML = `<p>Total Precios (lista) Mercaderia: $${total}</p>`
+}
+
+const calcularTotalPrecioNeto = (array) =>{
+  const casillasTotalNeto = document.getElementById("casillasTotalNeto");
+  const datosPrecios = array
+  let salida =datosPrecios.reduce((acumulador,elemento) =>{
+      return acumulador+= calcularDescuentos(elemento.precioProducto, elemento.descuentoProducto) * elemento.unidadesProducto
+  },0)
+
+  return casillasTotalNeto.innerHTML = `<p>Total Precios (neto) Mercaderia: $${salida}</p>`
+}
