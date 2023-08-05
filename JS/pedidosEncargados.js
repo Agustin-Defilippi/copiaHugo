@@ -42,14 +42,30 @@ const renderMisPedidos = () =>{
               <input type="text" id="clienteNombre" placeholder="nombre" class="input-class mb-3">
 
               <label class="mb-2"><b>Ingrese numero pedido</b></label>
-              <input type="number" id="posicionPedido" placeholder="numero Pedido" class="input-class mb-3">
+              <input type="text" id="posicionPedido" placeholder="numero Pedido" class="input-class mb-3">
 
+              <button id="btnPedidosGuardados" class="btn bg-danger text-light">Guardados</button>
+              
             </div>
+
+            
 
             <div id="contenedores"class="containerForm8 pdf-style" id="misPdf table table-striped">
 
             
             </div>
+            <div id="productosGuardados">
+
+
+
+            </div>
+
+            <div id="verProductos">
+
+
+
+            </div>
+
           </div>
         </div>
     
@@ -66,6 +82,7 @@ const renderMisPedidos = () =>{
 
    volverAtrasMisPedidos()
    renderContenedores()
+  
 
       const btnPdf = document.getElementById("btn-pdf")
 
@@ -96,7 +113,7 @@ const renderContenedores = () =>{
   
   const inputNombreCliente = document.getElementById("clienteNombre");
 
-  inputNombreCliente.addEventListener("change", () =>{
+  inputNombreCliente.addEventListener("input", () =>{
     contenedores.innerHTML = `
   <table    class="table table-striped border border-dark">
     <thead>
@@ -117,23 +134,23 @@ const renderContenedores = () =>{
 
     </tbody>
   </table>`
-  renderizarPedido();
+    renderizarPedido(); 
+    console.log(inputNombreCliente.value);
+    verProductosGuardados(inputNombreCliente.value.toUpperCase())
   })
-  
  
 }
 
-
 const renderizarPedido = () => {
   const pedidos = datos;
-  console.log(pedidos);
+  /* console.log(pedidos); */
   const inputNombreCliente = document.getElementById("clienteNombre");
   const inputPosicion = document.getElementById("posicionPedido");
   const misPedidos = document.getElementById("misPedidos");
 
   const arrayFiltradoCliente = pedidos.filter(item => item.nombreCliente === inputNombreCliente.value.trim().toUpperCase());
 
-  console.log(arrayFiltradoCliente);
+  /* console.log(arrayFiltradoCliente); */
   // Limpiamos los resultados anteriores antes de mostrar los nuevos
   misPedidos.innerHTML = '';
 
@@ -166,30 +183,91 @@ const renderizarPedido = () => {
       console.log("Ingrese un número válido de posición.");
       return;
     }
+    if(posicionSeleccionada == ""){
+      renderMisPedidos()
+    }
   
     // Filtramos el array por la posición seleccionada
     const arrayFiltradoPorPosicion = arrayFiltradoCliente.filter((item, index) => index === posicionSeleccionada);
+
+    /* console.log(arrayFiltradoPorPosicion); */
   
     // Limpiamos los resultados anteriores antes de mostrar los nuevos
     misPedidos.innerHTML = '';
   
-    arrayFiltradoPorPosicion.forEach((elemento, i) => {
+    arrayFiltradoPorPosicion.forEach((elemento,i) => {
       // Renderizamos los pedidos filtrados por posición
       const contenedorPepe = document.createElement("tr");
+      let PrecioSinIVA =(elemento.precioProducto / 1.21).toFixed(2)
       contenedorPepe.innerHTML = `
         
-        <td>${elemento.id}</td>
-        <td>${elemento.nombre}</td>
-        <td>${elemento.unidades}</td>
-        <td>$${elemento.precio} ARS</td>
-        <td>%${elemento.descuento}</td>
-        <td>$${elemento.precio * elemento.unidades} ARS</td>
-        <td>$${calcularDescuentos(elemento.precio, elemento.descuento) * elemento.unidades} ARS</td>
-      `;
+      <td>${i}</td>
+      <td>${elemento.id}</td>
+      <td>${elemento.nombreProducto}</td>
+      <td>${elemento.unidadesProducto}</td>
+      <td>$${elemento.precioProducto} ARS</td>
+      <td>$${PrecioSinIVA} ARS</td>
+      <td>${(elemento.precioProducto - PrecioSinIVA).toFixed(2)}</td>
+      <td>%${elemento.descuentoProducto}</td>
+      <td>$${elemento.precioProducto * elemento.unidadesProducto} ARS</td>
+      <td>$${calcularDescuentos(elemento.precioProducto,elemento.descuentoProducto)* elemento.unidadesProducto} ARS</td>
+  
+      `
       misPedidos.appendChild(contenedorPepe);
+
+      const buttonGuardar = document.createElement("button");
+      buttonGuardar.className="btn bg-danger text-light";
+      buttonGuardar.textContent="Guardar";
+      buttonGuardar.id= `btnGuardar${posicionSeleccionada}`;
+
+      misPedidos.appendChild(buttonGuardar);
+
+      buttonGuardar.addEventListener("click",() =>{
+        console.log(`exelente guarde ${elemento.nombreProducto}`);
+        pedidosGuardados.push(elemento);
+        console.log(pedidosGuardados);
+        localStorage.setItem("guardarPedidos", JSON.stringify(pedidosGuardados));
+        
+      })
     });
   });
-  
+}
+
+const verProductosGuardados = (elementoNombre) => {
+  const btnVerPedidos = document.getElementById("btnPedidosGuardados");
+  btnVerPedidos.addEventListener("click", () => {
+    const contVerPedidos = document.getElementById("misPedidos");
+    const pedidos = JSON.parse(localStorage.getItem('guardarPedidos'));
+    const filtracionNombre = pedidos.filter(elemento => elemento.nombreCliente === elementoNombre);
+
+    // Vaciamos el contenido actual de los pedidos
+    contVerPedidos.innerHTML = '';
+
+    filtracionNombre.forEach(elemento => {
+      let PrecioSinIVA = (elemento.precioProducto / 1.21).toFixed(2);
+      const inyectarHtml = document.createElement("tr");
+
+      inyectarHtml.innerHTML = `
+        <td>${elemento.id}</td>
+        <td>${elemento.nombreProducto}</td>
+        <td>${elemento.unidadesProducto}</td>
+        <td>$${elemento.precioProducto} ARS</td>
+        <td>$${PrecioSinIVA} ARS</td>
+        <td>${(elemento.precioProducto - PrecioSinIVA).toFixed(2)}</td>
+        <td>%${elemento.descuentoProducto}</td>
+        <td>$${elemento.precioProducto * elemento.unidadesProducto} ARS</td>
+        <td>$${calcularDescuentos(elemento.precioProducto, elemento.descuentoProducto) * elemento.unidadesProducto} ARS</td>`;
+
+      inyectarHtml.classList.add("pedido-guardado"); // Agregamos una clase CSS a los pedidos guardados
+      contVerPedidos.appendChild(inyectarHtml);
+    });
+
+    // Ocultamos los pedidos no guardados
+    const pedidosNoGuardados = contVerPedidos.querySelectorAll("tr:not(.pedido-guardado)");
+    pedidosNoGuardados.forEach(pedido => {
+      pedido.style.display = "none";
+    });
+  });
 }
 
 const calcularDescuentos = (precioProducto,porcentajeDescuento) =>{
@@ -215,77 +293,4 @@ const descargarPDF = (x) => {
     // Utilizar html2pdf.js para generar el PDF
     html2pdf().from(element).set(options).save();
 }; 
-   
-
-/* const descargarPDF = (className) => {
-  // Crear una copia del contenido para no modificar el HTML original
-  const element = document.createElement("div");
-  const originalContent = document.getElementsByClassName(className);
-
-  for (let i = 0; i < originalContent.length; i++) {
-    const clonedNode = originalContent[i].cloneNode(true);
-    element.appendChild(clonedNode);
-  }
-
-  // Configuración opcional para el tamaño y orientación del PDF
-  const options = {
-    margin: 15,
-    filename: "PedidosHUGO.pdf",
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2},
-    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-  };
-
-  // Aplicar estilos en línea a los elementos clonados
-  const elements = element.getElementsByClassName(className);
-
-  for (let i = 0; i < elements.length; i++) {
-    elements[i].style.color = "black";
-    elements[i].style.fontSize = "20px";
-    elements[i].style.border = "black solid 2px";
-    elements[i].style.fontFamily = "'Times New Roman', Times, serif";
-   
-    // Agrega más estilos según sea necesario
-  }
-
-  // Utilizar html2pdf.js para generar el PDF
-  html2pdf().from(element).set(options).save();
-}; */
-
-/* 
-contMisPedidos.innerHTML= `<div  class="containerPrograma4" id="containerPrograma4">
-<div  class="containerForm4">
-  <div id="misPedidosPdf" class="containerForm4">
-    <h1>MIS PEDIDOS</h1>
-    <div class="containerForm7">
-      
-      <div class="containerForm8 pdf-style" id="misPdf table table-striped">
-          <table    class="table table-striped border border-dark">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Producto</th>
-                <th scope="col">Unidades</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Bonificacion</th>
-                <th scope="col">SubTotal</th>
-                <th scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody id="misPedidos" class="w-100">
-    
-            </tbody>
-          </table>
-      </div>
   
-    </div>
-  </div>
-  
-  <div class="btn-resetBase">
-    <button id="btn-pdf"class="btn bg-danger text-light" type="button">Descargar PDF</button>
-  </div>
-</div>
-</div>
-<div class="btn-volver4 border border-ligth">
-  <button id="btn-volverAtras4"class="btn bg-warning">Volver</button>
-</div>` */

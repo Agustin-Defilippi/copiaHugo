@@ -6,6 +6,11 @@ permitirIngreso();
 
 const datos = JSON.parse(localStorage.getItem('misPedidos')) || []
 let stockProductos = JSON.parse(localStorage.getItem('baseDatos')) || [];
+const pedidosGuardados = JSON.parse(localStorage.getItem('guardarPedidos')) ||[] ;
+
+/* const storageGuardarProd =  */
+
+
 
 let comprobantePedido =1 
 console.log(comprobantePedido + "alfin");

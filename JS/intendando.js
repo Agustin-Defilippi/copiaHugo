@@ -119,7 +119,7 @@ const renderFormStock1 = () => {
 };
 
 // Funcion eventica para renderizar el formulario infinito
-const agregarCampoOnClick1 = () => {
+ const agregarCampoOnClick1 = () => {
     const botonAgregarCampo1 = document.getElementById('btn-pedido');
     
     botonAgregarCampo1.addEventListener('click',
@@ -208,21 +208,24 @@ const mostrarBtnFinalizar1 = () => {
 
         let pepo1 = ""
 
-        for (const productoObjeto of misProductos) {
-            const nombreProducto1 = productoObjeto.nombreProducto.trim();
-            const unidadesProducto1 = productoObjeto.unidadesProducto;
-
-            console.log("Tu nombre de producto es:", nombreProducto1);
+        if (misProductos.length > 0) {
             
-           pepo1 = prodBasedeDatos1.find((element) => element.nombre === nombreProducto1);
+          const  lastProductoObjeto = misProductos[misProductos.length - 1];
+          const nombreProducto1 = lastProductoObjeto.nombreProducto.trim();
+          const unidadesProducto1 = lastProductoObjeto.unidadesProducto;
 
+          console.log("Tu nombre de producto es:", nombreProducto1);
+            
+          pepo1 = prodBasedeDatos1.find((element) => element.nombre === nombreProducto1);
+
+          
             if (pepo1) {
                 pepo1.unidades -= unidadesProducto1;
             }
 
             console.log("Producto encontrado:", pepo1);
-        }
 
+        }
         localStorage.setItem("baseDatos", JSON.stringify(prodBasedeDatos1));
     });
 };
