@@ -211,3 +211,4 @@ const borrarBaseDatos = () =>{
     console.log("Base de datos reseteada.");
   })
 }
+

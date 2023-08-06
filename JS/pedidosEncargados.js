@@ -81,6 +81,7 @@ const renderMisPedidos = () =>{
     
         <div class="btn-resetBase">
           <button id="btn-pdf"class="btn bg-danger text-light" type="button">Descargar PDF</button>
+          <button id="btn-borrarPedidos"class="btn bg-dark text-warning" type="button">Resetear Pedidos</button>
         </div>
       </div>
     </div>
@@ -90,9 +91,9 @@ const renderMisPedidos = () =>{
   
 
 
-   volverAtrasMisPedidos()
-   renderContenedores()
-  
+   volverAtrasMisPedidos();
+   renderContenedores();
+   btnBorrarPedidos() ;
 
       const btnPdf = document.getElementById("btn-pdf")
 
@@ -325,7 +326,23 @@ const descargarPDF = (x) => {
     // Utilizar html2pdf.js para generar el PDF
     html2pdf().from(element).set(options).save();
 }; 
+
+const btnBorrarPedidos = () =>{
+  const btnBorrarPedidos = document.getElementById("btn-borrarPedidos");
   
+  btnBorrarPedidos.addEventListener("click" , () =>{
+    const contenedorPedidos= document.getElementById("misPedidos");
+    const totalCasilla = document.getElementById("casillasTotalLista");
+    const casillasTotalNeto = document.getElementById("casillasTotalNeto");
+    localStorage.removeItem("misPedidos");
+    localStorage.removeItem("guardarPedidos");
+    datos.length = 0
+    console.log(datos);
+    contenedorPedidos.innerHTML="";
+    totalCasilla.innerHTML ="";
+    casillasTotalNeto.innerHTML = "";
+  })
+}
 
 const calcularTotalPrecioLista = (array) =>{
   const totalCasilla = document.getElementById("casillasTotalLista");
